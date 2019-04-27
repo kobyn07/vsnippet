@@ -74,7 +74,7 @@ class Application(tk.Frame):
         # body を整形する
         body_list = self.body.split("\n")
         for i, line in enumerate(body_list):
-            line = "\"" + line + "\","
+            body_list[i] = "\"" + line + "\","
 
         self.body = "\n\t\t".join(body_list)
         self.body = self.body.replace("\\", "\\\\").replace("\t", "    ")
@@ -92,6 +92,8 @@ class Application(tk.Frame):
         self.covted_txt.insert("1.0", self.covted_json)
 
         # クリップボードにコピーする
+        if self.clip_bool.get():
+            pyperclip.copy(self.covted_json)
 
     def clicked_on_clear_button(self):
         "消去ボタンを押したときの挙動"
