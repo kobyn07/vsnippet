@@ -17,6 +17,7 @@ class Application(tk.Frame):
         self.prefix = ""
         self.description = ""
         self.body = ""
+        self.covted_json = ""
 
         # prefix の入力
         prefix_ttl = tk.Label(self, text="prefix")
@@ -50,9 +51,9 @@ class Application(tk.Frame):
         # クリップボードにコピーするかどうかのチェックボックス
         self.clip_bool = tk.BooleanVar()
         self.clip_bool.set(True)
-        self.clip_btn = tk.Checkbutton(
+        clip_btn = tk.Checkbutton(
             self, variable=self.clip_bool, text="クリップボードにコピーする")
-        self.clip_btn.grid(row=4, sticky=tk.W)
+        clip_btn.grid(row=4, sticky=tk.W)
 
         # 消去ボタン
         self.clr_btn = tk.Button(
@@ -61,7 +62,36 @@ class Application(tk.Frame):
 
     def clicked_on_convert_Button(self):
         "変換ボタンを押したときの挙動"
+
+        # 出力するテキストボックスを初期化する
         self.init_txt(self.covted_txt)
+
+        # テキストボックスから文字列を取得する
+        self.prefix = self.prefix_ent.get()
+        self.description = self.desc_ent.get()
+        self.body = self.body_txt.get("1.0", "end-1c")
+
+        # body を整形する
+        body_list = self.body.split("\n")
+        for i, line in enumerate(body_list):
+            line = "\"" + line + "\","
+
+        self.body = "\n\t\t".join(body_list)
+        self.body = self.body.replace("\\", "\\\\").replace("\t", "    ")
+
+        # json 形式に整形する
+        self.covted_json = """\"{}\": {{
+    \"prefix\": \"{}\",
+    \"description\": \"{}\",
+    \"body": [
+        {}
+    ],
+}},""".format(self.prefix.capitalize(), self.prefix, self.description, self.body)
+
+        # 整形したものを出力する
+        self.covted_txt.insert("1.0", self.covted_json)
+
+        # クリップボードにコピーする
 
     def clicked_on_clear_button(self):
         "消去ボタンを押したときの挙動"
