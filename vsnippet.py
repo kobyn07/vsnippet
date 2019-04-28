@@ -18,7 +18,10 @@ class Application(tk.Frame):
         self.description = ""
         self.body = ""
         self.covted_json = ""
+        self.widget()
 
+    def widget(self):
+        "見た目の部分"
         # prefix の入力
         prefix_ttl = tk.Label(self, text="prefix")
         prefix_ttl.grid(row=0, column=0, sticky=tk.E)
@@ -45,7 +48,7 @@ class Application(tk.Frame):
 
         # 変換ボタン
         covt_btn = tk.Button(self, text="変換", padx=20, pady=20,
-                             font=(10), command=self.clicked_on_convert_Button)
+                             font=(10), command=self.clicked_on_convert_button)
         covt_btn.grid(row=3, column=1)
 
         # クリップボードにコピーするかどうかのチェックボックス
@@ -60,7 +63,7 @@ class Application(tk.Frame):
             self, text="消去", command=self.clicked_on_clear_button)
         self.clr_btn.grid(row=4, column=1)
 
-    def clicked_on_convert_Button(self):
+    def clicked_on_convert_button(self):
         "変換ボタンを押したときの挙動"
 
         # 出力するテキストボックスを初期化する
