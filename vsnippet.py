@@ -89,7 +89,7 @@ class Application(tk.Frame):
     \"body": [
         {}
     ],
-}},""".format(self.prefix.capitalize(), self.prefix, self.description, self.body)
+}},""".format(self.prefix.upper(), self.prefix, self.description, self.body)
 
         # 整形したものを出力する
         self.covted_txt.insert("1.0", self.covted_json)
