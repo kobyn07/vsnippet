@@ -77,10 +77,12 @@ class Application(tk.Frame):
         # body を整形する
         body_list = self.body.split("\n")
         for i, line in enumerate(body_list):
+            line = line.replace("\"", "\\\"")
             body_list[i] = "\"" + line + "\","
 
         self.body = "\n\t\t".join(body_list)
-        self.body = self.body.replace("\\", "\\\\").replace("\t", "    ")
+        self.body = self.body.replace("\\", "\\\\").replace(
+            "\t", "    ").replace("\\\\\"", "\\\"")
 
         # json 形式に整形する
         self.covted_json = """\"{}\": {{
